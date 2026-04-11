@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "CZ44P835FF.com.candobear.wikimatch",
+        "paths": ["/join/*"]
+      }
+    ]
+  }
+}
