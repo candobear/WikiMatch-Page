@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiMatch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 32px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        .icon { font-size: 64px; margin-bottom: 16px; }
+        h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: #1d1d1f; }
+        .code {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            color: #0071e3;
+            margin: 16px 0;
+        }
+        .description {
+            font-size: 15px;
+            color: #86868b;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .btn {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 12px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #0077ed; }
+        .store-link {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .store-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <!-- Join Game Card -->
+    <div class="card" id="joinCard" style="display:none;">
+        <div class="icon">🏁</div>
+        <h1>You've been invited!</h1>
+        <div class="code" id="roomCode"></div>
+        <p class="description">
+            Someone invited you to a WikiMatch game. Tap the button below to join the race!
+        </p>
+        <a class="btn" id="openApp" href="#">Open WikiMatch</a>
+        <br>
+        <a class="store-link" href="https://apps.apple.com/app/wikimatch/id6744919498">
+            Don't have the app? Download from App Store
+        </a>
+    </div>
+
+    <!-- 404 Card -->
+    <div class="card" id="notFoundCard" style="display:none;">
+        <div class="icon">🔍</div>
+        <h1>Page Not Found</h1>
+        <p class="description">
+            The page you're looking for doesn't exist.
+        </p>
+        <a class="btn" href="/">Go Home</a>
+    </div>
+
+    <script>
+        const path = window.location.pathname;
+        const match = path.match(/^\/join\/([A-Za-z0-9]+)\/?$/);
+
+        if (match) {
+            const code = match[1];
+            document.getElementById('joinCard').style.display = 'block';
+            document.getElementById('roomCode').textContent = code.toUpperCase();
+
+            const appURL = 'wikimatch://join/' + code;
+            const openBtn = document.getElementById('openApp');
+            openBtn.href = appURL;
+
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                openBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location = appURL;
+                });
+            }
+        } else {
+            document.getElementById('notFoundCard').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
